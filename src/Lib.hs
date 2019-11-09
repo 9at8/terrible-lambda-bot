@@ -2,22 +2,42 @@
 {-# LANGUAGE DeriveGeneric #-}
 
 module Lib
-    ( botPost
+    ( Update
+    , handleUpdate
     ) where
 
 import Data.Text (Text)
-import Yesod
+import Data.Aeson
 import GHC.Generics
 
-data Person = Person
+data Update = Update
   {
-    firstName :: Text,
-    lastName :: Text,
-    age :: Int
+    update_id :: Int,
+    message :: Maybe Message
   } deriving (Show, Generic)
 
-instance FromJSON Person
-instance ToJSON Person
+instance FromJSON Update
+instance ToJSON Update
 
-botPost :: Person
-botPost = Person "Jason" "Derulo" 50
+data Message = Message
+  {
+    message_id :: Int,
+    chat :: Chat,
+    text :: Maybe Text,
+    reply_to_message :: Maybe Message
+  } deriving (Show, Generic)
+
+instance FromJSON Message
+instance ToJSON Message
+
+data Chat = Chat
+  {
+    id :: Int
+  } deriving (Show, Generic)
+
+instance FromJSON Chat
+instance ToJSON Chat
+
+handleUpdate :: Update -> IO ()
+handleUpdate u = do
+  print u

@@ -7,7 +7,7 @@ module Main where
 
 import Data.Text (Text)
 import Yesod
-import Lib
+import qualified Lib as L
 
 data App = App
 
@@ -18,7 +18,10 @@ mkYesod "App" [parseRoutes|
 instance Yesod App
 
 postBotR :: Handler Value
-postBotR = returnJson $ botPost
+postBotR = do
+  update <- requireCheckJsonBody :: Handler L.Update
+  liftIO $ L.handleUpdate update
+  returnJson $ object []
 
 main :: IO ()
 main = warp 3000 App
