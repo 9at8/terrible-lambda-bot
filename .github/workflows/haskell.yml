@@ -13,6 +13,32 @@ jobs:
       with:
         ghc-version: '8.6.5'
         cabal-version: '3.0'
+    
+    - name: Cache Stack
+      uses: actions/cache@v1
+      with:
+        path: $HOME/.local
+        key: ${{ runner.OS }}-stack
+        restore-keys: ${{ runner.OS }}-stack
+        
+    - name: Install Stack
+      run: |
+        mkdir -p ~/.local/bin
+        export PATH=$HOME/.local/bin:$PATH
+        curl -sSL https://get.haskellstack.org/ | sh
+        
+    - name: Cache dependencies
+      uses: actions/cache@v1
+      with:
+        path: $HOME/.stack
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/stack.yaml') }}
+        
+    - name: Cache local dependencies
+      uses: actions/cache@v1
+      with:
+        path: ./.stack-work
+        key: ${{ runner.OS }}-build-${{ hashFiles('**/stack.yaml') }}
+
     - name: Install dependencies
       run: |
         cabal update
