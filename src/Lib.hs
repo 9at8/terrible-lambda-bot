@@ -2,11 +2,11 @@
 {-# LANGUAGE DeriveGeneric #-}
 
 module Lib
-    ( someFunc
+    ( botPost
     ) where
 
 import Data.Text (Text)
-import Data.Aeson
+import Yesod
 import GHC.Generics
 
 data Person = Person
@@ -19,7 +19,5 @@ data Person = Person
 instance FromJSON Person
 instance ToJSON Person
 
-jason = show $ encode (Person "Jason" "Derulo" 50)
-
-someFunc :: IO ()
-someFunc = putStrLn jason
+botPost :: Person
+botPost = Person "Jason" "Derulo" 50

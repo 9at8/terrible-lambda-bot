@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 79cf74c39d40c002dfd8df6499bd51b8cc69804883d47d98f5552499345a5e7c
+-- hash: 11ff0edeffbfbfd1389c8bad6629af0d4c622af9dc57d97577a61c99918d3592
 
 name:           terrible-lambda-bot
 version:        0.1.0.0
@@ -36,6 +36,7 @@ library
       aeson >=1.4.5.0
     , base >=4.7 && <5
     , text
+    , yesod
   default-language: Haskell2010
 
 executable terrible-lambda-bot-exe
@@ -50,6 +51,7 @@ executable terrible-lambda-bot-exe
     , base >=4.7 && <5
     , terrible-lambda-bot
     , text
+    , yesod
   default-language: Haskell2010
 
 test-suite terrible-lambda-bot-test
@@ -65,4 +67,5 @@ test-suite terrible-lambda-bot-test
     , base >=4.7 && <5
     , terrible-lambda-bot
     , text
+    , yesod
   default-language: Haskell2010
